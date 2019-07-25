@@ -11,7 +11,8 @@ pipeline {
             steps {
               withSonarQubeEnv('sonar') {
                 script {
-                env.sonarurl= '3.212.83.87' \\Change the Sonar Host IP
+                \\Change the Sonar Host IP
+                env.sonarurl= '3.212.83.87'
                 sh 'mvn clean package sonar:sonar -Dsonar.host.url=http://${sonarurl}:9000'
               }
              }
