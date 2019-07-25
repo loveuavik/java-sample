@@ -1,4 +1,9 @@
-def sonarurl = "3.212.83.87"
+def sonarurl
+
+node {
+	sonarurl = 3.212.83.87
+}
+
 pipeline {
     agent any	
     stages {
