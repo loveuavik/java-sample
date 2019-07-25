@@ -1,4 +1,4 @@
-def sonarurl= Jenkins.getInstance().getComputer('').getHostName()
+def sonarurl= "curl -4 icanhazip.com".execute().text
 println("Hostname : ${sonarurl}")
 
 pipeline {
