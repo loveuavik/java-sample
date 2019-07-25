@@ -13,7 +13,8 @@ pipeline {
                 script {
                 def sonarurl= "curl -4 icanhazip.com".execute().text
                 println("Hostname : ${sonarurl}")
-                mvn clean package sonar:sonar -Dsonar.host.url=http://println("Hostname : ${sonarurl}"):9000
+                sh 'echo ${sonarurl}'
+                sh 'mvn clean package sonar:sonar -Dsonar.host.url=http://'${sonarurl}':9000'
               }
              }
             }
