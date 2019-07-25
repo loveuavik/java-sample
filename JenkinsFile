@@ -12,9 +12,9 @@ pipeline {
               withSonarQubeEnv('sonar') {
                 script {
                 env.sonarurl= "curl -4 icanhazip.com".execute().text
-                println("Hostname : ${env.sonarurll}")
+                println("Hostname : ${env.sonarurl}")
                 sh 'echo ${sonarurl}'
-                sh 'mvn clean package sonar:sonar -Dsonar.host.url=http://${env.sonarurl}:9000'
+                sh 'mvn clean package sonar:sonar -Dsonar.host.url=http://${sonarurl}:9000'
               }
              }
             }
