@@ -1,3 +1,6 @@
+def sonarurl= Jenkins.getInstance().getComputer('').getHostName()
+println("Hostname : ${sonarurl}")
+
 pipeline {
     agent any	
     stages {
@@ -9,8 +12,6 @@ pipeline {
         stage("SonarQube analysis") {
             agent any
             steps {
-	     script { def sonarurl= Jenkins.getInstance().getComputer('').getHostName()
-	     		println("Hostname : ${sonarurl}") }
               withSonarQubeEnv('sonar') {
                 sh 'mvn clean package sonar:sonar -Dsonar.host.url=http://${sonarurl}:9000'
               }
