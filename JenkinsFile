@@ -1,8 +1,5 @@
-def sonarurl
-
-node {
-	sonarurl = 3.212.83.87
-}
+def sonarurl = InetAddress.localHost.hostAddress
+println "Master located at ${masterIP}"
 
 pipeline {
     agent any	
