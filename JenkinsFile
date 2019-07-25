@@ -9,15 +9,15 @@ pipeline {
         stage("SonarQube analysis") {
             agent any
             steps {
+	     script { def sonarurl= sh(returnStdout: true, script: 'echo ${BUILD_URL/http:\\/\\/} | cut -d "/" -f1').trim()
+	     		println("Hostname : ${sonarurl}") }
               withSonarQubeEnv('sonar') {
                 sh 'mvn clean package sonar:sonar -Dsonar.host.url=http://${sonarurl}:9000'
               }
             }
           }
           stage("Quality Gate") {
-            steps {
-             script { def sonarurl= sh(returnStdout: true, script: 'echo ${BUILD_URL/http:\\/\\/} | cut -d "/" -f1').trim()
-					  println("Hostname : ${sonarurl}") }
+            steps {			  
               timeout(time: 1, unit: 'HOURS') {
                 waitForQualityGate abortPipeline: true
               }
