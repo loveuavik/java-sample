@@ -1,6 +1,3 @@
-def sonarurl= "curl -4 icanhazip.com".execute().text
-println("Hostname : ${sonarurl}")
-
 pipeline {
     agent any	
     stages {
@@ -12,6 +9,8 @@ pipeline {
         stage("SonarQube analysis") {
             agent any
             steps {
+            def sonarurl= "curl -4 icanhazip.com".execute().text
+            println("Hostname : ${sonarurl}")
               withSonarQubeEnv('sonar') {
                 sh 'mvn clean package sonar:sonar -Dsonar.host.url=http://${sonarurl}:9000'
               }
