@@ -9,7 +9,7 @@ pipeline {
         stage("SonarQube analysis") {
             agent any
             steps {
-			  def sonarurl = 3.212.83.87
+	      def sonarurl = 3.212.83.87
               withSonarQubeEnv('sonar') {
                 sh 'mvn clean package sonar:sonar' -Dsonar.host.url=http://${sonarurl}:9000
               }
