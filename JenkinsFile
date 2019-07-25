@@ -16,7 +16,7 @@ pipeline {
           }
           stage("Quality Gate") {
             steps {
-             script { def sonarurl= sh(returnStdout: true, script: 'echo ${BUILD_URL/https:\\/\\/} | cut -d "/" -f1').trim()
+             script { def sonarurl= sh(returnStdout: true, script: 'echo ${BUILD_URL/http:\\/\\/} | cut -d "/" -f1').trim()
 					  println("Hostname : ${sonarurl}") }
               timeout(time: 1, unit: 'HOURS') {
                 waitForQualityGate abortPipeline: true
