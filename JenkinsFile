@@ -1,5 +1,7 @@
-def sonarurl = InetAddress.localHost.hostAddress
-println "Master located at ${masterIP}"
+def sonarurl() {
+    return env.BUILD_URL.split('/')[2].split(':')[0]
+}
+println "Master located at ${sonarurl}"
 
 pipeline {
     agent any	
