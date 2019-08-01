@@ -1,6 +1,4 @@
-properties([
-parameters([string(defaultValue: '3.212.83.87', description: '', name: 'sonarurl', trim: false)])
-])
+
 pipeline {
     agent any	
     stages {
