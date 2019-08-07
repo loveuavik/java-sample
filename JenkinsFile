@@ -23,9 +23,18 @@ pipeline {
               }
             }
           }
-        stage('Deploy') {
+        stage('Deploy to Repo') {
             steps {
                 sh label: '', script: 'mvn clean deploy'
+            }
+        }
+		stage('Deploy to Server') {
+			steps {
+            sh label: '', script: '''
+            output=$(date +%F)
+            echo $output
+            mvn dependency:get -DrepoUrl=http://localhost:8081/repository/maven-snapshots/ -DgroupId=com.example -DartifactId=java-maven-junit-helloworld -Dversion=2.0-SNAPSHOT -Dtransitive=false  -DoutputDirectory=$WORKSPACE
+            unzip *.zip'''
             }
         }
     }
