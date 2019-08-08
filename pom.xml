@@ -27,8 +27,7 @@
   </properties>
 
          <distributionManagement>
-    	<repositories>
-                  <repository>
+    	<repository>
      		 <id>Nexus</id>
      		 <url>http://localhost:8081/repository/maven-snapshots/</url>
     	</repository>
@@ -36,8 +35,7 @@
      		 <id>Nexus</id>
       		 <url>http://localhost:8081/repository/maven-releases/</url>
     	</repository>
-         </repositories>      
-    </distributionManagement>
+     </distributionManagement>
          
   <dependencies>
     <!-- Testing dependencies. -->
