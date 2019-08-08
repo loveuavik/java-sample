@@ -27,14 +27,16 @@
   </properties>
 
          <distributionManagement>
-    	<snapshotRepository>
+    	<repositories>
+                  <repository>
      		 <id>Nexus</id>
      		 <url>http://localhost:8081/repository/maven-snapshots/</url>
-    	</snapshotRepository>
+    	</repository>
     	<repository>
      		 <id>Nexus</id>
       		 <url>http://localhost:8081/repository/maven-releases/</url>
     	</repository>
+         </repositories>      
     </distributionManagement>
          
   <dependencies>
