@@ -17,7 +17,7 @@ pipeline {
             steps {
               withSonarQubeEnv('sonar') {
                 script {
-                sh 'mvn -f pomfile/pom.xml clean package sonar:sonar -Dsonar.host.url=http://${sonarurl}:9000'
+                sh 'mvn -f pomfile/pom.xml clean package sonar:sonar -Dsonar.host.url=http://3.212.83.87:9000'
               }
              }
             }
@@ -36,7 +36,7 @@ pipeline {
         }
 		stage('Deploy to Server') {
 			steps {
-            sh label: '', script: 'mvn dependency:get -DremoteRepositories=http://localhost:8081/repository/maven-snapshots/ -DgroupId=${GROUPID} -DartifactId=${ARTIFACTID} -Dversion=${VERSION} -Dtransitive=false  -Ddest=/app/'
+            sh label: '', script: 'mvn dependency:get -DremoteRepositories=http://3.212.83.87:8081/repository/maven-snapshots/ -DgroupId=${GROUPID} -DartifactId=${ARTIFACTID} -Dversion=${VERSION} -Dtransitive=false  -Ddest=/app/'
             }
         }
     }
