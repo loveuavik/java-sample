@@ -1,10 +1,9 @@
 pipeline {
     agent any
 	  environment {
-    
-    IMAGE = readMavenPom().getArtifactId()
-    VERSION = readMavenPom().getVersion()
-  }
+		ARTIFACTID = readMavenPom().getArtifactId()
+		VERSION = readMavenPom().getVersion()
+		}
     stages {
         stage('Build') {
             steps {
@@ -36,7 +35,8 @@ pipeline {
 		stage('Deploy to Server') {
 			steps {
 			sh """ echo ${VERSION} """
-            sh label: '', script: 'mvn dependency:get -DremoteRepositories=http://localhost:8081/repository/maven-snapshots/ -DgroupId=com.example -DartifactId=java-maven-junit-helloworld -Dversion=2.0-SNAPSHOT -Dtransitive=false  -Ddest=/app/'
+			sh """ echo ${ARTIFACTID} """
+            sh label: '', script: 'mvn dependency:get -DremoteRepositories=http://localhost:8081/repository/maven-snapshots/ -DgroupId=com.example -DartifactId=${ARTIFACTID} -Dversion=${VERSION} -Dtransitive=false  -Ddest=/app/'
             }
         }
     }
