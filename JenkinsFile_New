@@ -2,9 +2,9 @@ pipeline {
     agent any
 	  environment {
 		pom = readMavenPom file: 'pomfile/pom.xml'
-		ARTIFACTID = print pom.artifactId
-		VERSION = print pom.version
-		GROUPID = print pom.groupId
+		ARTIFACTID = ${pom.artifactId}
+		VERSION = ${pom.version}
+		GROUPID = ${pom.groupId}
 		}
     stages {
         stage('Build') {
@@ -36,7 +36,7 @@ pipeline {
         }
 		stage('Deploy to Server') {
 			steps {
-			sh ''' echo '${pom.version}' '''
+			sh ''' echo "${VERSION}" '''
             sh "mvn dependency:get -DremoteRepositories=http://localhost:8081/repository/maven-snapshots/ -DgroupId=${GROUPID} -DartifactId=${ARTIFACTID} -Dversion=${VERSION} -Dtransitive=false  -Ddest=/app/"
             }
         }
