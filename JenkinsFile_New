@@ -17,7 +17,7 @@ pipeline {
             steps {
               withSonarQubeEnv('sonar') {
                 script {
-                sh 'mvn clean package sonar:sonar -Dsonar.host.url=http://${sonarurl}:9000'
+                sh 'mvn -f pomfile/pom.xml clean package sonar:sonar -Dsonar.host.url=http://${sonarurl}:9000'
               }
              }
             }
@@ -31,7 +31,7 @@ pipeline {
           }
         stage('Deploy to Repo') {
             steps {
-                sh label: '', script: 'mvn clean deploy'
+                sh label: '', script: 'mvn -f pomfile/pom.xml clean deploy'
             }
         }
 		stage('Deploy to Server') {
