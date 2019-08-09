@@ -1,11 +1,11 @@
 pipeline {
     agent any
-    stages {
-		environment {
+	environment {
 			groupId = readMavenPom().getgroupId()
 			artifactId = readMavenPom().getartifactId()
 			version = readMavenPom().getversion()
-		}
+	}
+    stages {
         stage('Build') {
             steps {
                 sh label: '', script: 'mvn package'
