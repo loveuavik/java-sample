@@ -3,6 +3,7 @@ pipeline {
 	  environment {
 		ARTIFACTID = readMavenPom().getArtifactId()
 		VERSION = readMavenPom().getVersion()
+		GROUPID = readMavenPom().getGroupId()
 		}
     stages {
         stage('Build') {
@@ -36,6 +37,7 @@ pipeline {
 			steps {
 			sh """ echo ${VERSION} """
 			sh """ echo ${ARTIFACTID} """
+			sh """ echo ${GROUPID} """
             sh label: '', script: 'mvn dependency:get -DremoteRepositories=http://localhost:8081/repository/maven-snapshots/ -DgroupId=com.example -DartifactId=${ARTIFACTID} -Dversion=${VERSION} -Dtransitive=false  -Ddest=/app/'
             }
         }
