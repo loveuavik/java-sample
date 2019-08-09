@@ -32,6 +32,7 @@ pipeline {
 		stage('Deploy to Server') {
 			steps {
 			def pom = readMavenPom file: 'pomfile/pom.xml'
+			print pom.version
             sh label: '', script: 'mvn dependency:get -DremoteRepositories=http://localhost:8081/repository/maven-snapshots/ -DgroupId=${pom.groupId} -DartifactId=${pom.artifactId} -Dversion=${pom.version} -Dtransitive=false  -Ddest=/app/'
             }
         }
