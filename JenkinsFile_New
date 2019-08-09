@@ -1,10 +1,10 @@
 pipeline {
     agent any
 	  environment {
-		pom = readMavenPom file: 'pom.xml'
-		ARTIFACTID = pom.artifactId
-		VERSION = pom.version
-		GROUPID = pom.groupId
+		pom = readMavenPom file: 'pomfile/pom.xml'
+		ARTIFACTID = 'pom.artifactId'
+		VERSION = 'pom.version'
+		GROUPID = 'pom.groupId'
 		}
     stages {
         stage('Build') {
