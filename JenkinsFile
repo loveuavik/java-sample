@@ -1,10 +1,15 @@
 pipeline {
     agent any
-	  environment {
+	environment {
 		ARTIFACTID = readMavenPom().getArtifactId()
 		VERSION = readMavenPom().getVersion()
 		GROUPID = readMavenPom().getGroupId()
-		}
+	}
+	paramList = [
+        [$class: 'StringParameterValue', name: 'ARTIFACTID', value: "${ARTIFACTID}"],
+        [$class: 'StringParameterValue', name: 'VERSION', value: "${VERSION}"],
+        [$class: 'StringParameterValue', name: 'GROUPID', value: "${GROUPID}"]
+    ]
     stages {
         stage('Build') {
             steps {
@@ -35,7 +40,7 @@ pipeline {
         }
 		stage('Invoking Deployment Java Pipeline Job') {
 			steps {
-            build job: 'deployment-java', parameters: [[string(name: 'ARTIFACTID', value: "${ARTIFACTID}")], [string(name: 'GROUPID', value: "${GROUPID}")], [string(name: 'VERSION', value: "${VERSION}")]]
+            build(job: "deployment-java", parameters: paramList)
             }
         }
     }
