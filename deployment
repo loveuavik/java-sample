@@ -28,9 +28,9 @@ agent { label 'master'}
                     else if("${params.deployment_type}" == "TALEND")
                     {
                         
-                        sh label: '', returnStdout: true, script: '''kill $(pgrep ${params.service})
+                        sh label: '', returnStdout: true, script: '''rm -rf ${params.service}.*
                                    mvn dependency:get -DremoteRepositories=http://localhost:8081/repository/maven-snapshots/ -DgroupId=com.example -DartifactId=${params.service} -Dversion=${params.version} -Dtransitive=false  -DoutputDirectory=/app/
-                                   unzip ${params.service} -${params.version}.jar
+                                   unzip ${params.service} -${params.version}.zip
                         '''
                         
                     }                  
