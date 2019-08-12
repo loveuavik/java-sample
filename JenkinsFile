@@ -1,24 +1,9 @@
-#!/usr/bin/env groovy
 pipeline {
     agent any
 	environment {
 		ARTIFACTID = readMavenPom().getArtifactId()
 		VERSION = readMavenPom().getVersion()
 		GROUPID = readMavenPom().getGroupId()
-	}
-	parameters {
-            string(
-                name: 'ARTIFACTID',
-                defaultValue:"${ARTIFACTID}",
-                description: "")
-			string(
-                name: 'VERSION',
-                defaultValue:"${VERSION}",
-                description: "")
-			string(
-                name: 'GROUPID',
-                defaultValue:"${GROUPID}",
-                description: "")
 	}
     stages {
         stage('Build') {
@@ -50,11 +35,11 @@ pipeline {
         }
 		stage('Invoking Deployment Java Pipeline Job') {
 			steps {
-            build(job: "deployment-java",
-                        parameters:
-                        [string(name: 'ARTIFACTID', value: "${params.ARTIFACTID}"),
-                        string(name: 'VERSION', value: "${params.VERSION}"),
-                        string(name: 'GROUPID', value: "${params.GROUPID}")])
+				build job: 'deployment-java', parameters: [
+						string(name: 'ARTIFACTID', value: env.ARTIFACTID),
+						string(name: 'VERSION', value: env.VERSION),
+						string(name: 'GROUPID', value: env.GROUPID)
+				], wait: false
             }
         }
     }
