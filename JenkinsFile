@@ -9,12 +9,12 @@ pipeline {
             string(
                 name: 'ARTIFACTID',
                 defaultValue:"${ARTIFACTID}",
-                description: ""),
-				string(
+                description: "")
+			string(
                 name: 'VERSION',
                 defaultValue:"${VERSION}",
-                description: ""),
-				string(
+                description: "")
+			string(
                 name: 'GROUPID',
                 defaultValue:"${GROUPID}",
                 description: "")
