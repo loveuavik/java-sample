@@ -1,5 +1,10 @@
 pipeline {
     agent any
+	parameters {
+        string(defaultValue: "", description: 'K', name: 'ARTIFACTID'),
+        string(defaultValue: "", description: 'K', name: 'VERSION'),
+        string(defaultValue: "", description: 'K', name: 'GROUPID')
+    }
 	stages {
 		stage('Deploy to Server') {
 			steps {
