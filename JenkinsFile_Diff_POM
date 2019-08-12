@@ -1,14 +1,15 @@
 pipeline {
     agent any
 	  environment {
-		ARTIFACTID = readMavenPom().getArtifactId()
-		VERSION = readMavenPom().getVersion()
-		GROUPID = readMavenPom().getGroupId()
+		pom = readMavenPom file: 'pomfile/pom.xml'
+		ARTIFACTID = "${pom.artifactId}"
+		VERSION = "${pom.version}"
+		GROUPID = "${pom.groupId}"
 		}
     stages {
         stage('Build') {
             steps {
-                sh label: '', script: 'mvn package'
+                sh label: '', script: 'mvn -f pomfile/pom.xml package'
             }
         }
         stage("SonarQube analysis") {
@@ -16,7 +17,7 @@ pipeline {
             steps {
               withSonarQubeEnv('sonar') {
                 script {
-                sh 'mvn clean package sonar:sonar -Dsonar.host.url=http://${sonarurl}:9000'
+                sh 'mvn -f pomfile/pom.xml clean package sonar:sonar -Dsonar.host.url=http://${sonarurl}:9000'
               }
              }
             }
@@ -30,7 +31,7 @@ pipeline {
           }
         stage('Deploy to Repo') {
             steps {
-                sh label: '', script: 'mvn clean deploy'
+                sh label: '', script: 'mvn -f pomfile/pom.xml clean deploy'
             }
         }
 		stage('Deploy to Server') {
