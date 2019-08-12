@@ -7,7 +7,7 @@ agent { label 'master'}
     {
         string(defaultValue: "", description: 'Please Deployment Type', name: 'deployment_type')
         string(defaultValue: "", description: 'Please Environment', name: 'environment')
-        string(defaultValue: "", description: 'Please Product', name: 'product')
+        string(defaultValue: "", description: 'Please Service', name: 'service')
         string(defaultValue: "", description: 'Please Version', name: 'version')        
     }
     stages 
@@ -19,12 +19,19 @@ agent { label 'master'}
                 script 
                 {
                     if("${params.deployment_type}" == "JAVA")
-                    { 
-                        
-                                
+                    {
+                        sh label: '', returnStdout: true, script: '''kill $(pgrep ${params.service})
+                            mvn dependency:get -DremoteRepositories=http://localhost:8081/repository/maven-snapshots/ -DgroupId=com.example -DartifactId=${params.service} -Dversion=${params.version} -Dtransitive=false  -DoutputDirectory=/app/
+                            java -Dspring.profiles.active=dev1 -jar ${params.service} -${params.version}.jar
+                          '''
                     }
                     else if("${params.deployment_type}" == "TALEND")
                     {
+                        
+                        sh label: '', returnStdout: true, script: '''kill $(pgrep ${params.service})
+                                   mvn dependency:get -DremoteRepositories=http://localhost:8081/repository/maven-snapshots/ -DgroupId=com.example -DartifactId=${params.service} -Dversion=${params.version} -Dtransitive=false  -DoutputDirectory=/app/
+                                   unzip ${params.service} -${params.version}.jar
+                        '''
                         
                     }                  
                 }
