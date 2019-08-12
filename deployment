@@ -1,0 +1,39 @@
+#!/usr/bin/env groovy
+
+pipeline 
+{
+agent { label 'master'}
+    parameters 
+    {
+        string(defaultValue: "", description: 'Please Deployment Type', name: 'deployment_type')
+        string(defaultValue: "", description: 'Please Environment', name: 'environment')
+        string(defaultValue: "", description: 'Please Product', name: 'product')
+        string(defaultValue: "", description: 'Please Version', name: 'version')        
+    }
+    stages 
+    {
+        stage("Deployment") 
+        {
+            steps 
+            {
+                script 
+                {
+                    if("${params.deployment_type}" == "JAVA")
+                    { 
+                        
+                                
+                    }
+                    else if("${params.deployment_type}" == "TALEND")
+                    {
+                        
+                    }                  
+                }
+            }
+        }
+    }
+    post { 
+        always { 
+            cleanWs()
+        }
+    }
+}
