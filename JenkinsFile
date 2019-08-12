@@ -33,15 +33,10 @@ pipeline {
                 sh label: '', script: 'mvn clean deploy'
             }
         }
-		stage('Deploy to Server') {
+		stage('Invoking Deployment Java Pipeline Job') {
 			steps {
-            sh label: '', script: 'mvn dependency:get -DremoteRepositories=http://localhost:8081/repository/maven-snapshots/ -DgroupId=${GROUPID} -DartifactId=${ARTIFACTID} -Dversion=${VERSION} -Dtransitive=false  -Ddest=/app/'
+            build job: 'deployment-java', parameters: [[string(name: 'ARTIFACTID', value: "${ARTIFACTID}")], [string(name: 'GROUPID', value: "${GROUPID}")], [string(name: 'VERSION', value: "${VERSION}")]]
             }
         }
     }
-    post { 
-        always { 
-            cleanWs()
-             }
-        }
 }
