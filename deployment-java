@@ -3,7 +3,7 @@ pipeline {
 	stages {
 		stage('Deploy to Server') {
 			steps {
-					sh: '''
+					sh '''
 					echo "${GROUPID}"
 					echo "${ARTIFACTID}"
 					echo "${VERSION}" 
