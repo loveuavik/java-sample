@@ -13,10 +13,6 @@ pipeline {
 					echo "${ARTIFACTID}"
 					echo "${VERSION}" 
 					'''
-					sh label: '', returnStdout: true, script: '''kill $(pgrep ${ARTIFACTID}-${VERSION}.jar) 
-					mvn dependency:get -DremoteRepositories=http://localhost:8081/repository/maven-snapshots/ -DgroupId=${GROUPID} -DartifactId=${ARTIFACTID} -Dversion=${VERSION} -Dtransitive=false  -Ddest=/app/
-					java -Dspring.profiles.active=dev1 -jar ${ARTIFACTID}-${VERSION}.jar
-					'''
 			}
 		}
 	}
