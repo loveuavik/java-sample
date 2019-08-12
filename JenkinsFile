@@ -5,11 +5,20 @@ pipeline {
 		VERSION = readMavenPom().getVersion()
 		GROUPID = readMavenPom().getGroupId()
 	}
-	paramList = [
-        [$class: 'StringParameterValue', name: 'ARTIFACTID', value: "${ARTIFACTID}"],
-        [$class: 'StringParameterValue', name: 'VERSION', value: "${VERSION}"],
-        [$class: 'StringParameterValue', name: 'GROUPID', value: "${GROUPID}"]
-    ]
+	parameters {
+            string(
+                name: 'ARTIFACTID',
+                defaultValue:"${ARTIFACTID}",
+                description: ""),
+				string(
+                name: 'VERSION',
+                defaultValue:"${VERSION}",
+                description: ""),
+				string(
+                name: 'GROUPID',
+                defaultValue:"${GROUPID}",
+                description: "")
+	}
     stages {
         stage('Build') {
             steps {
@@ -40,7 +49,11 @@ pipeline {
         }
 		stage('Invoking Deployment Java Pipeline Job') {
 			steps {
-            build(job: "deployment-java", parameters: paramList)
+            build(job: "deployment-java",
+                        parameters:
+                        [string(name: 'ARTIFACTID', value: "${params.ARTIFACTID}"),
+                        string(name: 'VERSION', value: "${params.VERSION}"),
+                        string(name: 'GROUPID', value: "${params.GROUPID}")])
             }
         }
     }
