@@ -39,7 +39,7 @@ pipeline {
 						string(name: 'ARTIFACTID', value: env.ARTIFACTID),
 						string(name: 'VERSION', value: env.VERSION),
 						string(name: 'GROUPID', value: env.GROUPID)
-				], wait: false
+				], wait: true
             }
         }
     }
